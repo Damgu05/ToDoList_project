@@ -16,3 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+    
+    $app->register(App\Providers\RouteServiceProvider::class);
+    $app->register(App\Providers\AuthServiceProvider::class);
