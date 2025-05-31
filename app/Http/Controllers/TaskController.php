@@ -34,9 +34,11 @@ class TaskController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'required|string|min:8',
-                'satut'=>'string|in:en_attente,valide,annule'
+                'status' => 'nullable|string|in:en_attente,valide,annule'
             ]);
-
+              if (!isset($validated['status'])) {
+            $validated['status'] = 'en_attente';
+        }
             \Log::info('Validated data:', $validated);
             $user = Auth::user();
             
