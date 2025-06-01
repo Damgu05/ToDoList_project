@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Laravel + React</title>
+    <meta charset="UTF-8">
+    <title>ToDo App</title>
     @viteReactRefresh
-    @vite(['resources/js/app.jsx'])
+    @vite('resources/js/app.jsx')
 </head>
 <body>
-    <h1>Page Laravel</h1>
-
-    <div id="react-root"></div>
+    <div id="app"></div>
 </body>
 </html>
+

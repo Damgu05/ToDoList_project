@@ -1,17 +1,48 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useState } from "react";
+import Home from "./Home";
+import Signup from "./Signup";
+import Login from "./Login";
+import TaskManager from "./TaskManager";
 
-function App() {
-    return (
-        <div>
-            <h2>Hello React depuis Laravel 11 🚀</h2>
-        </div>
-    );
-}
+export default function App() {
+  const [page, setPage] = useState("home"); // home | signup | login | tasks
+  const [user, setUser] = useState(null);
 
-const rootElement = document.getElementById('react-root');
+  // Après inscription ou connexion réussie
+  const onAuthSuccess = (username) => {
+    setUser(username);
+    setPage("tasks");
+  };
 
-if (rootElement) {
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(<App />);
+  return (
+    <div style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", minHeight: "100vh", backgroundColor: "#fff5f8", padding: 20 }}>
+      {page === "home" && (
+        <Home
+          onSignup={() => setPage("signup")}
+          onLogin={() => setPage("login")}
+        />
+      )}
+      {page === "signup" && (
+        <Signup
+          onBack={() => setPage("home")}
+          onAuthSuccess={onAuthSuccess}
+        />
+      )}
+      {page === "login" && (
+        <Login
+          onBack={() => setPage("home")}
+          onAuthSuccess={onAuthSuccess}
+        />
+      )}
+      {page === "tasks" && user && (
+        <TaskManager
+          user={user}
+          onLogout={() => {
+            setUser(null);
+            setPage("home");
+          }}
+        />
+      )}
+    </div>
+  );
 }
