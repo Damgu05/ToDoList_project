@@ -12,11 +12,12 @@ class TaskController extends Controller
 {
    public function __construct()
     {
-        $this->middleware('auth:sanctum')->except(['index', 'show']);
+        $this->middleware('auth:sanctum')->except(['show']);
     }
     public function index() {
-        $task = Task::all();
-        return response()->json($task);
+       $user = Auth::user();
+    $tasks = $user->tasks()->get(); 
+    return response()->json($tasks);
     }
     public function show($id) {
         $task = Task::find($id);
@@ -52,5 +53,23 @@ class TaskController extends Controller
             return response()->json(['errors' => $e->errors()], 422);
         }
     }
+    public function updateStatus($id)
+{
+    $task = Task::find($id);
+
+    if (!$task) {
+        return response()->json(['message' => 'Tâche non trouvée'], 404);
+    }
+
+    if ($task->user_id !== Auth::id()) {
+        return response()->json(['message' => 'Accès non autorisé'], 403);
+    }
+
+    $task->status = 'valide';
+    $task->save();
+
+    return response()->json($task);
+}
+
 
 }

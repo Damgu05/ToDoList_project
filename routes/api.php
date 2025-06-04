@@ -18,3 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     broadcast(new UserLoggedIn($user));    
   return $user;
 });
+Route::middleware('auth:sanctum')->put('task/{id}/valider', [TaskController::class, 'updateStatus']);
