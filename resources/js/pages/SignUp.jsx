@@ -18,7 +18,7 @@ const Signup = () => {
     if (response.ok && data.token) {
       login(data.token);
     } else {
-      alert("Échec de l'inscription");
+      alert("Échec lors de l'inscription");
     }
   };
 
